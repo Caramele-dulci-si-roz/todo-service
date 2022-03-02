@@ -2,6 +2,17 @@
 
 Follow the [./PREREQUISITES.md](./PREREQUISITES.md) instructions to configure a local virtual machine with Ubuntu, Docker, IntelliJ.
 
+# Commit conventions
+
+There should be only one commit per pull request. Commit messages must use 
+[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). Please add to the optional scope
+the id of the issue you are addressing. For example:
+```
+feat[#1337]: Implement the newest coolest feature.
+docs[#420]: Update description for some entity.
+chore[#1989]: Update some configs.
+```
+
 # Access the code
 
 * Fork the code GitHub repository under your Organization
