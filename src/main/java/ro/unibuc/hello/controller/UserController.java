@@ -12,7 +12,7 @@ import ro.unibuc.hello.data.User;
 import ro.unibuc.hello.data.UserRepository;
 import ro.unibuc.hello.dto.AuthenticationData;
 import ro.unibuc.hello.dto.UserProfile;
-import ro.unibuc.hello.dto.UserSignUp;
+import ro.unibuc.hello.dto.UserRegister;
 
 @Controller
 public class UserController {
@@ -20,7 +20,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationData> register(@RequestBody UserSignUp userSignUp) {
+    public ResponseEntity<AuthenticationData> register(@RequestBody UserRegister userSignUp) {
         try {
             userRepository.insert(new User(userSignUp.getName(), userSignUp.getPassword()));
             return new ResponseEntity<>(new AuthenticationData(
@@ -39,7 +39,7 @@ public class UserController {
     public ResponseEntity<UserProfile> findByName(@PathVariable String name) {
         var found = userRepository.findByName(name);
         return found.map(user -> new ResponseEntity<>(
-                new UserProfile(user.name),
+                new UserProfile(user.getName()),
                 HttpStatus.OK
         )).orElseGet(() -> ResponseEntity.notFound().build());
     }
