@@ -36,7 +36,7 @@ public class TaskController {
 		}
 	}
 
-	@GetMapping("/all")
+	@GetMapping()
 	public List<TaskDto> getByProjectId (@RequestParam(required = false) String projectId){
 		if(Objects.isNull(projectId)){
 			return taskRepository.findAll().stream().map(task -> objectMapper.convertValue(task, TaskDto.class)).collect(Collectors.toList());
@@ -59,7 +59,7 @@ public class TaskController {
 		return ResponseEntity.ok().body("The task was successfully created.");
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable String id){
 		Optional<Task> optionalTask = taskRepository.findById(id);
 		if(optionalTask.isPresent()){
