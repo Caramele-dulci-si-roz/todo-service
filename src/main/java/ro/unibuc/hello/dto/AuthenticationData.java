@@ -1,9 +1,12 @@
 package ro.unibuc.hello.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthenticationData {
-    public final String token;
-    public final String message;
+    String token;
+    String message;
 }
