@@ -1,7 +1,8 @@
 package ro.unibuc.hello.data;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,22 +13,27 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 @NoArgsConstructor
-@ToString
+@Getter
 @Document
 public class User {
     @Id
-    public String id;
+    String id;
 
+    @Setter
     @Indexed(unique = true)
-    public String name;
+    String name;
 
-    public String passwordSalt;
-    public String passwordHash;
+    String passwordSalt;
+    String passwordHash;
 
     public User(String name, String password) throws NoSuchAlgorithmException {
         this.name = name;
         this.passwordSalt = generateSalt();
         this.passwordHash = hashPassword(password, this.passwordSalt);
+    }
+
+    public void setPassword(String password) throws NoSuchAlgorithmException {
+        this.passwordHash = this.hashPassword(password, this.passwordSalt);
     }
 
     public boolean isPasswordValid(String password) throws NoSuchAlgorithmException {
