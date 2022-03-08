@@ -6,62 +6,52 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @NoArgsConstructor
 @Getter
 @Document
-public class User {
+public class User implements UserDetails {
     @Id
     String id;
 
     @Setter
     @Indexed(unique = true)
-    String name;
+    String username;
+    @Setter
+    String password;
 
-    String passwordSalt;
-    String passwordHash;
-
-    public User(String name, String password) throws NoSuchAlgorithmException {
-        this.name = name;
-        this.passwordSalt = generateSalt();
-        this.passwordHash = hashPassword(password, this.passwordSalt);
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public void setPassword(String password) throws NoSuchAlgorithmException {
-        this.passwordHash = this.hashPassword(password, this.passwordSalt);
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new ArrayList<>();
     }
 
-    public boolean isPasswordValid(String password) throws NoSuchAlgorithmException {
-        var hash = hashPassword(password, this.passwordSalt);
-        return this.passwordHash.equals(hash);
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    private String generateSalt() {
-        var leftLimit = Character.getNumericValue('a');
-        var rightLimit = Character.getNumericValue('z');
-        var targetStringLength = 10;
-        var random = new Random();
-
-        return random.ints(leftLimit, rightLimit + 1)
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    private String hashPassword(String password, String salt) throws NoSuchAlgorithmException {
-        var saltedPassword = password + salt;
-        var digest = MessageDigest.getInstance("SHA-256");
-        var byteHash = digest.digest(saltedPassword.getBytes(StandardCharsets.UTF_8));
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-        StringBuilder result = new StringBuilder();
-        for (byte aByte : byteHash) {
-            result.append(String.format("%02x", aByte));
-        }
-        return result.toString();
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
