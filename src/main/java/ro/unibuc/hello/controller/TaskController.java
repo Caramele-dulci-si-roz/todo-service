@@ -37,11 +37,15 @@ public class TaskController {
 	}
 
 	@GetMapping()
-	public List<TaskDto> getByProjectId (@RequestParam(required = false) String projectId){
-		if(Objects.isNull(projectId)){
+	public List<TaskDto> get (@RequestParam(required = false) String projectId, @RequestParam(required = false) String userId){
+		if(Objects.isNull(projectId) && Objects.isNull(userId)){
 			return taskRepository.findAll().stream().map(task -> objectMapper.convertValue(task, TaskDto.class)).collect(Collectors.toList());
-		} else {
+		} else if(!Objects.isNull(projectId) && Objects.isNull(userId)){
 			return taskRepository.findAllByProjectId(projectId).stream().map(task -> objectMapper.convertValue(task, TaskDto.class)).collect(Collectors.toList());
+		} else if(Objects.isNull(projectId)){
+			return taskRepository.findAllByAssigneeId(userId).stream().map(task -> objectMapper.convertValue(task, TaskDto.class)).collect(Collectors.toList());
+		} else {
+			return taskRepository.findAllByAssigneeIdAndProjectId(userId, projectId).stream().map(task -> objectMapper.convertValue(task, TaskDto.class)).collect(Collectors.toList());
 		}
 	}
 
