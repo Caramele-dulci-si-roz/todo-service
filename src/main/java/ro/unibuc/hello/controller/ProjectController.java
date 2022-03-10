@@ -1,6 +1,7 @@
 package ro.unibuc.hello.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/project")
+@SecurityRequirement(name = "security")
 public class ProjectController {
 
 	final ProjectRepository projectRepository;
