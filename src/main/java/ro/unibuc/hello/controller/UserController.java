@@ -1,5 +1,6 @@
 package ro.unibuc.hello.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import ro.unibuc.hello.dto.UserProfile;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "security")
 public class UserController {
 
     final UserRepository userRepository;
