@@ -13,7 +13,7 @@ import ro.unibuc.hello.dto.UserProfile;
 @RestController
 public class UserController {
 
-    private UserRepository userRepository;
+    final UserRepository userRepository;
 
     @GetMapping("/{name}")
     public ResponseEntity<UserProfile> findByName(@PathVariable String name) {
