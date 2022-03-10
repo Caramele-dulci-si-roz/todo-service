@@ -2,6 +2,7 @@ package ro.unibuc.hello.data;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 public class Task {
 
+	@Id
 	String id;
 	String projectId;
 	String type;

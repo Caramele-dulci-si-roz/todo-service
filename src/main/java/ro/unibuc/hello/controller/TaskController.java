@@ -70,4 +70,21 @@ public class TaskController {
 		}
 	}
 
+	@PutMapping("/{id}/status/{status}")
+	public ResponseEntity<String> updateStatus(@PathVariable String status, @PathVariable String id) {
+		if(TaskStatus.contains(status)){
+			Optional<Task> optionalTask = taskRepository.findById(id);
+			if (optionalTask.isPresent()) {
+				Task task = optionalTask.get();
+				task.setStatus(TaskStatus.valueOf(status).name());
+				taskRepository.save(task);
+				return ResponseEntity.ok().body("The status was successfully updated.");
+			} else {
+				throw new BadRequestException("There is no task with this id!");
+			}
+		} else {
+			throw new BadRequestException("The task cannot pe updated to this status!");
+		}
+	}
+
 }
