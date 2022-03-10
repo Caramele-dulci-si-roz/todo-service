@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import ro.unibuc.hello.data.*;
 import ro.unibuc.hello.dto.CreateTask;
 import ro.unibuc.hello.dto.TaskDto;
+import ro.unibuc.hello.dto.UpdateTask;
 import ro.unibuc.hello.exception.BadRequestException;
+import ro.unibuc.hello.util.NullAwareBeanUtils;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -74,4 +77,16 @@ public class TaskController {
 		}
 	}
 
+	@PutMapping("/{id}")
+	public ResponseEntity<String> update (@PathVariable String id, @RequestBody @Valid UpdateTask updateTask) {
+		Optional<Task> optionalTask = taskRepository.findById(id);
+		if (optionalTask.isPresent()) {
+			Task task = optionalTask.get();
+			NullAwareBeanUtils.copyProperties(updateTask, task);
+			taskRepository.save(task);
+			return ResponseEntity.ok().body("The status was successfully updated.");
+		} else {
+			throw new BadRequestException("There is no task with this id!");
+		}
+	}
 }
