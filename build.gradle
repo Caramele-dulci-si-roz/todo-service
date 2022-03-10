@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.data:spring-data-mongodb'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.10'
 	implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.1'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.3'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
