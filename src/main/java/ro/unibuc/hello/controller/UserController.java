@@ -1,6 +1,6 @@
 package ro.unibuc.hello.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +9,10 @@ import ro.unibuc.hello.dto.UserProfile;
 
 
 @RequestMapping("/user")
+@RequiredArgsConstructor
 @RestController
 public class UserController {
-    @Autowired
+
     private UserRepository userRepository;
 
     @GetMapping("/{name}")

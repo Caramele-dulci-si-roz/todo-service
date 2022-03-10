@@ -1,7 +1,6 @@
 package ro.unibuc.hello.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,11 +24,8 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private final JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private final UserRepository userRepo;
+    final JwtTokenUtil jwtTokenUtil;
+    final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -50,7 +46,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
 
         // Get user identity and set it on the spring security context
-        UserDetails userDetails = userRepo
+        UserDetails userDetails = userRepository
                 .findByUsername(jwtTokenUtil.getUsername(token))
                 .orElse(null);
 

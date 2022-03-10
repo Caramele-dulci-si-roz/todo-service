@@ -1,7 +1,7 @@
 package ro.unibuc.hello.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,14 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import static java.lang.String.format;
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private final UserRepository userRepository;
-
-    @Autowired
-    private final JwtTokenFilter jwtTokenFilter;
+    final UserRepository userRepository;
+    final JwtTokenFilter jwtTokenFilter;
 
     public SecurityConfig(UserRepository userRepository, JwtTokenFilter jwtTokenFilter) {
         this.userRepository = userRepository;

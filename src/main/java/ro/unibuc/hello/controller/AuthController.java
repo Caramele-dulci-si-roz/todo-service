@@ -1,6 +1,6 @@
 package ro.unibuc.hello.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,19 +23,14 @@ import ro.unibuc.hello.dto.UserRegister;
 import javax.validation.Valid;
 
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 @RestController
 public class AuthController {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    final UserRepository userRepository;
+    final PasswordEncoder passwordEncoder;
+    final AuthenticationManager authenticationManager;
+    final JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationData> register(@Valid @RequestBody UserRegister userSignUp) {
