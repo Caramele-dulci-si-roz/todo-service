@@ -3,7 +3,9 @@ package ro.unibuc.hello.controller;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
 
     @Mock
@@ -36,11 +39,6 @@ class AuthControllerTest {
 
     @InjectMocks
     AuthController authController;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void register() {
@@ -62,7 +60,6 @@ class AuthControllerTest {
         var expectedPassword = "password";
         var expectedHash = "hash";
         var expectedToken = "token";
-        when(passwordEncoder.encode(expectedPassword)).thenReturn(expectedHash);
         when(jwtTokenUtil.generateAccessToken(any())).thenReturn(expectedToken);
 
         var expectedUser = new User("username", expectedHash);
