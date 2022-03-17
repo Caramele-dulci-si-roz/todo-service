@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.unibuc.hello.data.*;
+import ro.unibuc.hello.dto.AssignUser;
 import ro.unibuc.hello.dto.CreateTask;
 import ro.unibuc.hello.dto.TaskDto;
 import ro.unibuc.hello.dto.UpdateTask;
@@ -28,6 +29,7 @@ public class TaskController {
 
 	final TaskRepository taskRepository;
 	final ObjectMapper objectMapper;
+	final UserRepository userRepository;
 
 	@GetMapping("/{id}")
 	public TaskDto getById (@PathVariable String id){
@@ -89,6 +91,29 @@ public class TaskController {
 			return ResponseEntity.ok().body("The status was successfully updated.");
 		} else {
 			throw new BadRequestException("There is no task with this id!");
+		}
+	}
+
+	@PostMapping("{id}/assignment")
+	public ResponseEntity<String> assign(@PathVariable String id,@RequestBody AssignUser assignTaskToUser ){
+		Optional<Task> optionalTask = taskRepository.findById(id);
+		Optional<User> optionalUser = userRepository.findById(id);
+		AssignUser userAssigned = new AssignUser();
+		if(optionalTask.isPresent()){
+			Task task = new Task();
+			BeanUtils.copyProperties(optionalTask.get(), task);
+			BeanUtils.copyProperties(assignTaskToUser, userAssigned);
+			if(optionalUser.isPresent()){
+				task.setAssigneeId(userAssigned.getAssigneeId());
+				taskRepository.save(task);
+
+				return ResponseEntity.badRequest().body("The task has been assigned successfully!");
+			}else{
+				return ResponseEntity.badRequest().body("The task could not be assigned because there user doesn't exist!	");
+			}
+
+		} else {
+			return ResponseEntity.badRequest().body("There is no task with this id!");
 		}
 	}
 }
