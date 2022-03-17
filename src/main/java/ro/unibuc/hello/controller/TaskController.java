@@ -78,16 +78,16 @@ public class TaskController {
 		}
 	}
 
-	@PostMapping("/asign/{id}")
+	@PostMapping("task/{id}/assignment")
 	public ResponseEntity<String> assign(@PathVariable String id,@RequestBody AssignUser assignTaskToUser ){
 		Optional<Task> optionalTask = taskRepository.findById(id);
-		Optional<User> optionaluser = userRepository.findById(id);
+		Optional<User> optionalUser = userRepository.findById(id);
 		AssignUser userAssigned = new AssignUser();
 		if(optionalTask.isPresent()){
 			Task task = new Task();
 			BeanUtils.copyProperties(optionalTask.get(), task);
 			BeanUtils.copyProperties(assignTaskToUser, userAssigned);
-			if(optionaluser.isPresent()){
+			if(optionalUser.isPresent()){
 				task.setAssigneeId(userAssigned.getAssigneeId());
 				taskRepository.save(task);
 				return ResponseEntity.badRequest().body("The task has been assigned successfully!");
