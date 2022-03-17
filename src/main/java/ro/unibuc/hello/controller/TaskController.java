@@ -63,7 +63,7 @@ public class TaskController {
 				.setPriority(TaskPriority.MEDIUM.toString())
 				.setStatus(TaskStatus.OPEN.toString())
 				.setType(TaskType.TASK.toString());
-		BeanUtils.copyProperties(createTask, task);
+		NullAwareBeanUtils.copyProperties(createTask, task);
 		taskRepository.insert(task);
 		return ResponseEntity.ok().body("The task was successfully created.");
 	}
