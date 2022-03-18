@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'org.asciidoctor.convert' version '1.5.8'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'ro.unibuc'
@@ -56,4 +57,27 @@ test {
 asciidoctor {
 	inputs.dir snippetsDir
 	dependsOn test
+}
+
+jacoco {
+	toolVersion = '0.8.5'
+}
+
+test {
+	finalizedBy jacocoTestReport
+}
+
+//
+jacocoTestReport {
+	dependsOn test
+
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					"ro/unibuc/hello/HelloApplication.*",
+					"ro/unibuc/hello/config/**",
+					"ro/unibuc/hello/validation/**"
+			])
+		}))
+	}
 }
