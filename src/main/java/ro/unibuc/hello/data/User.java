@@ -15,16 +15,15 @@ import java.util.Collection;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Document
 @EqualsAndHashCode
 public class User implements UserDetails {
     @Id
     String id;
 
-    @Setter
     @Indexed(unique = true)
     String username;
-    @Setter
     String password;
 
     public User(String username, String password) {
