@@ -94,10 +94,10 @@ public class TaskController {
 		}
 	}
 
-	@PostMapping("{id}/assignment")
+	@PostMapping("/{id}/assignment")
 	public ResponseEntity<String> assign(@PathVariable String id,@RequestBody AssignUser assignTaskToUser ){
 		Optional<Task> optionalTask = taskRepository.findById(id);
-		Optional<User> optionalUser = userRepository.findById(id);
+		Optional<User> optionalUser = userRepository.findById(assignTaskToUser.getAssigneeId());
 		AssignUser userAssigned = new AssignUser();
 		if(optionalTask.isPresent()){
 			Task task = new Task();
@@ -107,7 +107,7 @@ public class TaskController {
 				task.setAssigneeId(userAssigned.getAssigneeId());
 				taskRepository.save(task);
 
-				return ResponseEntity.badRequest().body("The task has been assigned successfully!");
+				return ResponseEntity.ok().body("The task has been assigned successfully!");
 			}else{
 				return ResponseEntity.badRequest().body("The task could not be assigned because there user doesn't exist!	");
 			}
