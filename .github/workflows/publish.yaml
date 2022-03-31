@@ -2,8 +2,6 @@ name: Docker publish
 
 on:
   push:
-    branches:
-      - 'main'
 
 jobs:
   push_to_registry:
@@ -11,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build & test
-        uses: ./.github/workflows/java_ci
+        uses: ./.github/workflows/java_ci.yaml
 
       - name: Check out the repo
         uses: actions/checkout@v2
