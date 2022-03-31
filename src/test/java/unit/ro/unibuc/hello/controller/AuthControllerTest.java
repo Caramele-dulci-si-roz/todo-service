@@ -1,4 +1,4 @@
-package ro.unibuc.hello.controller.unit;
+package unit.ro.unibuc.hello.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

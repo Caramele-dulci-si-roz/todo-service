@@ -1,6 +1,7 @@
-package ro.unibuc.hello.controller.integration;
+package integration.ro.unibuc.hello.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@Disabled
 class TaskControllerIntegrationTest {
 
 	@Autowired

@@ -1,4 +1,4 @@
-package ro.unibuc.hello.controller.unit;
+package unit.ro.unibuc.hello.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.builder.EqualsBuilder;
