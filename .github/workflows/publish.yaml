@@ -10,6 +10,7 @@ jobs:
 
   push_to_registry:
     name: Push Docker image to Docker Hub
+    needs: java_ci
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
