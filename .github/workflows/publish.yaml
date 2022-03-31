@@ -8,7 +8,7 @@ jobs:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
-      - name: Build & test
+      - name: Build & tet
         uses: ./.github/workflows/java_ci
 
       - name: Check out the repo
