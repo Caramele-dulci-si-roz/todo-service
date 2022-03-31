@@ -1,4 +1,4 @@
-package ro.unibuc.hello.controller;
+package ro.unibuc.hello.controller.unit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import ro.unibuc.hello.controller.ProjectController;
 import ro.unibuc.hello.data.ProjectRepository;
 import org.junit.jupiter.api.Assertions;
 import ro.unibuc.hello.data.*;

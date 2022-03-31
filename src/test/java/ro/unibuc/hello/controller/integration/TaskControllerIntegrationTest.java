@@ -1,4 +1,4 @@
-package ro.unibuc.hello.controller.IT;
+package ro.unibuc.hello.controller.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-class TaskControllerTestIT {
+class TaskControllerIntegrationTest {
 
 	@Autowired
 	MockMvc mockMvc;
