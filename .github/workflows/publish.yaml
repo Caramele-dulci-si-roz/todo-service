@@ -4,13 +4,14 @@ on:
   push:
 
 jobs:
+  build_and_test:
+    name: Build & tet
+    uses: ./.github/workflows/java_ci.yaml
+
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
-      - name: Build & tet
-        uses: ./.github/workflows/java_ci
-
       - name: Check out the repo
         uses: actions/checkout@v2
 
