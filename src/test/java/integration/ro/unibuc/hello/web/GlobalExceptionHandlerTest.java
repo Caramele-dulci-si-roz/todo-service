@@ -1,4 +1,4 @@
-package ro.unibuc.hello.web;
+package integration.ro.unibuc.hello.web;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import ro.unibuc.hello.exception.BadRequestException;
+import ro.unibuc.hello.web.GlobalExceptionHandler;
 
 @ExtendWith(MockitoExtension.class)
 class GlobalExceptionHandlerTest {
