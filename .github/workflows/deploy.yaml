@@ -20,4 +20,4 @@ jobs:
           username: ${{ secrets.PROD_USERNAME }}
           port: ${{ secrets.PROD_PORT }}
           password: ${{ secrets.PROD_PASSWORD }}
-          script: cd /home/littlewho && touch am_fost_aici
+          script: git clone https://github.com/Caramele-dulci-si-roz/todo-service; cd todo-service; git checkout deployment; git pull; docker-compose -f docker-compose.production.yml up
