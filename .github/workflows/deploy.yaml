@@ -5,6 +5,7 @@ on:
     branches:
       - 'main'
       - '*'
+      - 'deployment'
   workflow_call:
 
 jobs:
