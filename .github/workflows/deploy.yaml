@@ -1,9 +1,6 @@
 name: Deploy to production
 
 on:
-  push:
-    branches:
-      - 'main'
   workflow_call:
 
 jobs:
