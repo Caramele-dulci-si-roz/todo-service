@@ -18,7 +18,6 @@ jobs:
         with:
           host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USERNAME }}
-          password: ${{ secrets.PROD_PASSWORD }}
           port: ${{ secrets.PROD_PORT }}
           key: ${{ secrets.PROD_KEY }}
           script: cd /home/littlewho && touch am_fost_aici
