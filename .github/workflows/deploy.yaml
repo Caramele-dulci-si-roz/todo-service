@@ -20,5 +20,4 @@ jobs:
           username: ${{ secrets.PROD_USERNAME }}
           port: ${{ secrets.PROD_PORT }}
           key: ${{ secrets.PROD_KEY }}
-          passphrase: ${{ secrets.PROD_PASSPHRASE }}
           script: cd /home/littlewho && touch am_fost_aici
