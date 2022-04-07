@@ -55,6 +55,6 @@ jobs:
     needs: push_to_registry
     uses: ./.github/workflows/deploy.yaml
     secrets:
-      host: ${{ secrets.PROD_HOST }}
-      username: ${{ secrets.PROD_USERNAME }}
-      password: ${{ secrets.PROD_PASSWORD }}
+      PROD_HOST: ${{ secrets.PROD_HOST }}
+      PROD_USERNAME: ${{ secrets.PROD_USERNAME }}
+      PROD_PASSWORD: ${{ secrets.PROD_PASSWORD }}
