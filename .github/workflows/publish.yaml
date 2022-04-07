@@ -52,4 +52,5 @@ jobs:
 
   deployment:
     name: Deployment
+    needs: push_to_registry
     uses: ./.github/workflows/deploy.yaml
