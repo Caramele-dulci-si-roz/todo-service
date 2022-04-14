@@ -3,6 +3,7 @@ package ro.unibuc.hello.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 @SecurityRequirement(name = "security")
+@Slf4j
 public class TaskController {
 
 	final TaskRepository taskRepository;
@@ -72,6 +74,7 @@ public class TaskController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable String id){
+		log.info("Task with id " + id + " deleted");
 		Optional<Task> optionalTask = taskRepository.findById(id);
 		if(optionalTask.isPresent()){
 			taskRepository.delete(optionalTask.get());
@@ -106,9 +109,9 @@ public class TaskController {
 			if(optionalUser.isPresent()){
 				task.setAssigneeId(userAssigned.getAssigneeId());
 				taskRepository.save(task);
-
 				return ResponseEntity.ok().body("The task has been assigned successfully!");
-			}else{
+			} else {
+				log.warn("Task with id " + id + " assigned to null user");
 				return ResponseEntity.badRequest().body("The task could not be assigned because there user doesn't exist!	");
 			}
 

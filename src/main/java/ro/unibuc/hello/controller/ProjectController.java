@@ -3,6 +3,7 @@ package ro.unibuc.hello.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/project")
 @SecurityRequirement(name = "security")
+@Slf4j
 public class ProjectController {
 
 	final ProjectRepository projectRepository;
@@ -39,6 +41,7 @@ public class ProjectController {
 		Optional<Project> project = projectRepository.findById(id);
 		if(project.isPresent()){
 			projectRepository.deleteById(id);
+			log.info("Project with id " + id + " deleted");
 			return ResponseEntity.ok().body("The project has been successfully removed.");
 		} else {
 			return ResponseEntity.badRequest().body("We couldn't find any project with this id.");

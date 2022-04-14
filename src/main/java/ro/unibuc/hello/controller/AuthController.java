@@ -1,6 +1,7 @@
 package ro.unibuc.hello.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 public class AuthController {
 
     final UserRepository userRepository;
@@ -42,6 +44,7 @@ public class AuthController {
 
             return authenticatedBody(userSignUp.getUsername(), userSignUp.getPassword(), "Registration successful");
         } catch (Exception e) {
+            log.error("Creating new account failed due to errors", e);
             return new ResponseEntity<>(new AuthenticationData(
                     "",
                     e.getMessage()
@@ -54,6 +57,7 @@ public class AuthController {
         try {
             return authenticatedBody(userLogin.getUsername(), userLogin.getPassword(), "Login successful");
         } catch (BadCredentialsException e) {
+            log.warn("Bad credentials entered");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (Exception e) {
             return new ResponseEntity<>(new AuthenticationData(

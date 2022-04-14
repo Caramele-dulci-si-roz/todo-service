@@ -1,4 +1,4 @@
-package unit.ro.unibuc.hello.controller;
+package ro.unibuc.hello.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import ro.unibuc.hello.controller.UserController;
 import ro.unibuc.hello.data.User;
 import ro.unibuc.hello.data.UserRepository;
 import ro.unibuc.hello.dto.UserProfile;
