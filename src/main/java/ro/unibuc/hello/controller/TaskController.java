@@ -1,6 +1,8 @@
 package ro.unibuc.hello.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,7 @@ public class TaskController {
 	final TaskRepository taskRepository;
 	final ObjectMapper objectMapper;
 	final UserRepository userRepository;
+	final MeterRegistry meterRegistry;
 
 	@GetMapping("/{id}")
 	public TaskDto getById (@PathVariable String id){
@@ -46,7 +49,9 @@ public class TaskController {
 	}
 
 	@GetMapping()
+	@Timed(value = "get_tasks_time", description = "Time taken to return tasks")
 	public List<TaskDto> get (@RequestParam(required = false) String projectId, @RequestParam(required = false) String userId){
+		meterRegistry.counter("get_tasks", "endpoint", "/task").increment();
 		if(Objects.isNull(projectId) && Objects.isNull(userId)){
 			return taskRepository.findAll().stream().map(task -> objectMapper.convertValue(task, TaskDto.class)).collect(Collectors.toList());
 		} else if(!Objects.isNull(projectId) && Objects.isNull(userId)){
@@ -59,7 +64,9 @@ public class TaskController {
 	}
 
 	@PostMapping()
+	@Timed(value = "create_task_time", description = "Time taken to create tasks")
 	public ResponseEntity<String> create(@RequestBody CreateTask createTask) {
+		meterRegistry.counter("create_task", "endpoint", "/task").increment();
 		Task task = new Task()
 				.setCreatedAt(LocalDateTime.now())
 				// TODO: Change with logged user id
@@ -98,6 +105,7 @@ public class TaskController {
 	}
 
 	@PostMapping("/{id}/assignment")
+	@Timed(value = "assign_task_time", description = "Time taken to assign task")
 	public ResponseEntity<String> assign(@PathVariable String id,@RequestBody AssignUser assignTaskToUser ){
 		Optional<Task> optionalTask = taskRepository.findById(id);
 		Optional<User> optionalUser = userRepository.findById(assignTaskToUser.getAssigneeId());
@@ -109,13 +117,16 @@ public class TaskController {
 			if(optionalUser.isPresent()){
 				task.setAssigneeId(userAssigned.getAssigneeId());
 				taskRepository.save(task);
+				meterRegistry.counter("assign_task", "endpoint", "/task/{id}/assign", "status_code", "200").increment();
 				return ResponseEntity.ok().body("The task has been assigned successfully!");
 			} else {
 				log.warn("Task with id " + id + " assigned to null user");
+				meterRegistry.counter("assign_task", "endpoint", "/task/{id}/assign", "status_code", "400").increment();
 				return ResponseEntity.badRequest().body("The task could not be assigned because there user doesn't exist!	");
 			}
 
 		} else {
+			meterRegistry.counter("assign_task", "endpoint", "/task/{id}/assign", "status_code", "400").increment();
 			return ResponseEntity.badRequest().body("There is no task with this id!");
 		}
 	}
