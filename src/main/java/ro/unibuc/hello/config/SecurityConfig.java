@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/auth/*").permitAll()
+                .antMatchers("/actuator/prometheus").permitAll()
                 .antMatchers(SWAGGER).permitAll()
                 .anyRequest().authenticated();
 

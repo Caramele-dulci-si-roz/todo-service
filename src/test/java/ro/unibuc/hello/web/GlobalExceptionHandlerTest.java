@@ -1,4 +1,4 @@
-package integration.ro.unibuc.hello.web;
+package ro.unibuc.hello.web;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

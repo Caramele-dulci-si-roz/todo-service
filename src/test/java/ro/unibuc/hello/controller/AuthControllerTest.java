@@ -1,7 +1,6 @@
-package unit.ro.unibuc.hello.controller;
+package ro.unibuc.hello.controller;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -11,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ro.unibuc.hello.config.JwtTokenUtil;
-import ro.unibuc.hello.controller.AuthController;
 import ro.unibuc.hello.data.User;
 import ro.unibuc.hello.data.UserRepository;
 import ro.unibuc.hello.dto.UserLogin;
